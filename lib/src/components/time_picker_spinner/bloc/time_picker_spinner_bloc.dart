@@ -83,11 +83,18 @@ class TimePickerSpinnerBloc
 
       // Ensure 12 AM is displayed as '12' and not '0'
       String hourString = hourOfPeriod == 0 ? '12' : hourOfPeriod.toString();
+      if (isForce2Digits && hourString != '12') {
+        hourString = hourString.padLeft(2, '0');
+      }
 
       return hours.indexWhere((e) => e == hourString);
     }
 
-    return hours.indexWhere((e) => e == now.hour.toString());
+    String hourString = now.hour.toString();
+    if (isForce2Digits) {
+      hourString = hourString.padLeft(2, '0');
+    }
+    return hours.indexWhere((e) => e == hourString);
   }
 
   int _getInitialMinuteIndex({
@@ -123,7 +130,12 @@ class TimePickerSpinnerBloc
       is24HourMode ? 24 : 12,
       (index) {
         if (!is24HourMode && index == 0) {
-          return '12';
+          // In 12-hour mode, hour 0 should be displayed as 12
+          return isForce2Digits ? '12' : '12';
+        }
+        // Format with 2 digits if required (e.g., 00, 01, 02 for 24-hour mode)
+        if (isForce2Digits) {
+          return index.toString().padLeft(2, '0');
         }
         return '$index';
       },
@@ -136,7 +148,12 @@ class TimePickerSpinnerBloc
     final List<String> minutes = List.generate(
       (60 / minutesInterval).floor(),
       (index) {
-        return '${index * minutesInterval}';
+        final value = index * minutesInterval;
+        // Format with 2 digits if required (e.g., 00, 01, 02, ..., 59)
+        if (isForce2Digits) {
+          return value.toString().padLeft(2, '0');
+        }
+        return '$value';
       },
     );
     return minutes;
@@ -146,7 +163,12 @@ class TimePickerSpinnerBloc
     final List<String> seconds = List.generate(
       (60 / secondsInterval).floor(),
       (index) {
-        return '${index * secondsInterval}';
+        final value = index * secondsInterval;
+        // Format with 2 digits if required (e.g., 00, 01, 02, ..., 59)
+        if (isForce2Digits) {
+          return value.toString().padLeft(2, '0');
+        }
+        return '$value';
       },
     );
     return seconds;

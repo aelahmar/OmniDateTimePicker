@@ -86,7 +86,7 @@ void main() {
         final loaded = state as TimePickerSpinnerLoaded;
         expect(loaded.hours.length, equals(12));
         expect(loaded.hours.first, equals('12')); // 12 AM should be first
-        expect(loaded.hours.contains('1'), isTrue);
+        expect(loaded.hours.contains('01'), isTrue); // 2 digits with isForce2Digits
         expect(loaded.hours.contains('11'), isTrue);
       });
 
@@ -143,7 +143,7 @@ void main() {
 
         final loaded = state as TimePickerSpinnerLoaded;
         expect(loaded.hours.length, equals(24));
-        expect(loaded.hours.first, equals('0')); // Should start with 0
+        expect(loaded.hours.first, equals('00')); // Should start with 00 (2 digits)
         expect(loaded.hours.last, equals('23')); // Should end with 23
       });
 
@@ -168,7 +168,7 @@ void main() {
 
         final loaded = state as TimePickerSpinnerLoaded;
         expect(loaded.minutes.length, equals(60)); // 0-59 minutes
-        expect(loaded.minutes.first, equals('0'));
+        expect(loaded.minutes.first, equals('00')); // 2 digits with isForce2Digits
         expect(loaded.minutes.last, equals('59'));
       });
 
@@ -193,8 +193,8 @@ void main() {
 
         final loaded = state as TimePickerSpinnerLoaded;
         expect(loaded.minutes.length, equals(12)); // 60/5 = 12 intervals
-        expect(loaded.minutes.first, equals('0'));
-        expect(loaded.minutes[1], equals('5'));
+        expect(loaded.minutes.first, equals('00')); // 2 digits with isForce2Digits
+        expect(loaded.minutes[1], equals('05')); // 2 digits with isForce2Digits
         expect(loaded.minutes.last, equals('55'));
 
         blocCustomInterval.close();
@@ -208,7 +208,7 @@ void main() {
 
         final loaded = state as TimePickerSpinnerLoaded;
         expect(loaded.seconds.length, equals(60)); // 0-59 seconds
-        expect(loaded.seconds.first, equals('0'));
+        expect(loaded.seconds.first, equals('00')); // 2 digits with isForce2Digits
         expect(loaded.seconds.last, equals('59'));
       });
     });

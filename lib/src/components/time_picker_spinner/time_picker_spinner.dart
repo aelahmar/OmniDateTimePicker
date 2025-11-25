@@ -116,7 +116,7 @@ class TimePickerSpinner extends StatelessWidget {
                         growable: false,
                         state.hours.length,
                         (index) {
-                          String hour = state.hours[index];
+                          final String hour = state.hours[index];
                           // Calculate hour value based on current state rather than controller selection
                           final int hourValue = is24HourMode
                               ? int.parse(hour)
@@ -127,10 +127,6 @@ class TimePickerSpinner extends StatelessWidget {
 
                           final bool isDisabled =
                               _isHourDisabled(hourValue, datetimeBloc.state);
-
-                          if (isForce2Digits) {
-                            hour = hour.padLeft(2, '0');
-                          }
 
                           return Center(
                               child: Text(hour,
@@ -169,14 +165,11 @@ class TimePickerSpinner extends StatelessWidget {
                       children: List.generate(
                         state.minutes.length,
                         (index) {
-                          String minute = state.minutes[index];
+                          final String minute = state.minutes[index];
                           final int minuteValue = int.parse(minute);
                           final bool isDisabled = _isMinuteDisabled(
                               minuteValue, datetimeBloc.state);
 
-                          if (isForce2Digits) {
-                            minute = minute.padLeft(2, '0');
-                          }
                           return Center(
                               child: Text(minute,
                                   style: timePickerTheme.hourMinuteTextStyle
@@ -215,14 +208,10 @@ class TimePickerSpinner extends StatelessWidget {
                         children: List.generate(
                           state.seconds.length,
                           (index) {
-                            String second = state.seconds[index];
+                            final String second = state.seconds[index];
                             final int secondValue = int.parse(second);
                             final bool isDisabled = _isSecondDisabled(
                                 secondValue, datetimeBloc.state);
-
-                            if (isForce2Digits) {
-                              second = second.padLeft(2, '0');
-                            }
 
                             return Center(
                                 child: Text(second,
